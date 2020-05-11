@@ -1,0 +1,35 @@
+#include <18F4550.h>
+#device ADC=10
+#fuses HSPLL, NOWDT, NOPROTECT, NODEBUG, USBDIV, PLL5, CPUDIV1, VREGEN
+#use delay(clock=48000000)
+
+#include <usb_cdc.h>
+
+#define USB_CON_SENSE_PIN PIN_B2
+
+void main(){
+   byte i,j,address,value;
+   
+   int16 q,q1=0;
+   float p;
+   
+   setup_adc_ports(AN0|VSS_VDD);
+   setup_adc(ADC_CLOCK_INTERNAL);
+   set_adc_channel(0);
+   
+   usb_cdc_init();
+   usb_init();
+   
+   while(true){
+      usb_task();
+      if(usb_enumerated()) {
+         q = read_adc();
+         if (q!=q1){
+            p=5.0 * q / 1023.0;
+            printf(usb_cdc_putc,"\n\r Voltaje = %01.2fV",p);
+         }
+         q1=q;
+         delay_ms(500);
+      }
+   }
+}

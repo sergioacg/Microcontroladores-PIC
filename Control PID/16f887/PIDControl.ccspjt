@@ -1,0 +1,50 @@
+[PROJECT]
+Target=PIDControl.hex
+Processor_Text=PIC16F887
+CCSVersion=5.076
+Compiler=PCM
+[Target Data]
+FileList=PIDControl.c
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\DriversC:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
+[PIDControl.c]
+Type=4
+[mru-list]
+1=PIDControl.c
+[Opened Files]
+1=PIDControl.c
+2=..\18F4550\PIDControl.c
+3=
+4=
+t1=89
+Count=1
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=1
+D1=04-05-2020
+D1_L=12
+D1_L1=[74529]Project Opened.
+D1_L2=[75553]Started Editing.
+D1_L3=[75879]Stopped Editing.
+D1_L4=[76214]Started Editing.
+D1_L5=[76702]Stopped Editing.
+D1_L6=[77687]Started Editing.
+D1_L7=[77888]Stopped Editing.
+TotalEdit=12
+TotalDebug=0
+D1_E=12
+D1_D=0
+D1_L8=[77888]Project Closed.
+D1_L9=[78413]Project Opened.
+D1_L10=[78459]Started Editing.
+D1_L11=[79039]Stopped Editing.
+D1_L12=[83412]Project Closed.
+
+[defines]
+buildcount=9
+[Units]
+Count=1
+1=PIDControl (main)

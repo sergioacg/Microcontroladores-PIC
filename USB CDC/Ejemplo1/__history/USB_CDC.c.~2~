@@ -1,0 +1,10 @@
+#include <18F4550.h>
+#device ADC=10
+#fuses HSPLL, NOWDT, NOPROTECT, NODEBUG, USBDIV, PLL5, CPUDIV1, VREGEN
+#use delay(clock=48000000)
+
+#include <usb_cdc.h>
+
+void main(){
+
+}

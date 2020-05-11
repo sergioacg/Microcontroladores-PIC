@@ -1,0 +1,7 @@
+Compiling C:\Users\Sergio\Google Drive\Projects\PID_Control_PIC\16f887\PIDControl on 04-May-20 at 21:55
+>>> Warning 208 "PIDControl.c" Line 29(1,6): Function not void and does not return a value  RELOJ
+>>> Warning 203 "PIDControl.c" Line 134(1,1): Condition always TRUE
+>>> Warning 202 "PIDControl.c" Line 23(24,29): Variable never used:   theta
+      Memory usage:   ROM=44%      RAM=33% - 38%
+      0 Errors,  3 Warnings.
+Build Successful.

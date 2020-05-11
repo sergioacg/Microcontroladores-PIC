@@ -1,0 +1,121 @@
+#include <18F4550.h>
+#device ADC=10
+#fuses HSPLL, NOWDT, NOPROTECT, NODEBUG, USBDIV, PLL5, CPUDIV1, VREGEN
+#use delay(clock=48000000)
+
+#byte porta = 0xf80 // Identificador para el puerto A. 
+#byte portb = 0xf81 // Identificador para el puerto B. 
+#byte portc = 0xf82 // Identificador para el puerto C. 
+#byte portd = 0xf83 // Identificador para el puerto D. 
+#byte porte = 0xf84 // Identificador para el puerto E.
+
+//#define  USB_CONFIG_PID       0x000A
+//#define  USB_CONFIG_VID       0x04D8
+
+
+// if USB_CDC_ISR is defined, then this function will be called
+// by the USB ISR when there incoming CDC (virtual com port) data.
+// this is useful if you want to port old RS232 code that was use
+// #int_rda to CDC.
+#define USB_CDC_ISR() RDA_isr()
+
+// in order for handle_incoming_usb() to be able to transmit the entire
+// USB message in one pass, we need to increase the CDC buffer size from
+// the normal size and use the USB_CDC_DELAYED_FLUSH option.
+// failure to do this would cause some loss of data.
+#define USB_CDC_DELAYED_FLUSH
+#define USB_CDC_DATA_LOCAL_SIZE  128
+
+static void RDA_isr(void);
+
+// Includes all USB code and interrupts, as well as the CDC API
+#include <usb_cdc.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define USB_CON_SENSE_PIN PIN_B2
+#define LED1 PIN_B4
+#define LED2 PIN_B5
+
+
+int deg=0;
+
+//Define la interrupción por recepción Serial
+static void RDA_isr(void)
+{
+  output_toggle(LED1);
+  
+ while(usb_cdc_kbhit())
+   {
+    int i=0,ini=0,fin=0;
+    char dat[5];
+    char degC[5];
+    
+    // Almacena 5 datos leidos del USB CDC
+     for(i=0;i<5;i++){
+        dat[i]=usb_cdc_getc();
+       }
+   
+   
+   
+   //Busco el valor de los datos recibidos
+   for(i=0;i<5;i++){
+     if(dat[i]=='S'){
+       ini=i+1;
+       i=10;
+     }
+    }
+    for(i=ini;i<5;i++){
+     if(dat[i]=='$'){
+       fin=i-1;
+       i=10;
+     }
+    }
+    if(ini!=0 && fin!=0){
+       // salvo en degC el caracter con el escalon
+       for(i=ini;i<=fin;i++){
+        degC[i-ini]=dat[i];
+       }
+       
+        deg = atol(degC); //Convierte el String en un valor numerico
+        
+        if(deg==101)
+         output_toggle(LED1);
+         
+        if(deg==102)
+         output_toggle(LED2);
+    }
+  }
+}
+
+
+void main(){   
+   int16 v=0;
+   float p;
+   char msg[32]; 
+   
+   setup_adc_ports(AN0);
+   setup_adc(ADC_CLOCK_INTERNAL);
+   set_adc_channel(0);
+   
+   set_tris_b(0b00000100);
+   bit_clear(portb,4);
+   bit_clear(portb,5);
+
+   usb_cdc_init();
+   usb_init();
+   
+   //enable_interrupts(INT_RDA); //Habilita Interrupción por serial (Recepcion USB_CDC)
+   //enable_interrupts(GLOBAL);  //Habilita todas las interrupciones
+   
+   while(true){
+      usb_task();
+      if(usb_enumerated()) {
+         v = read_adc();
+         p=5.0 * v / 1023.0;
+         sprintf(msg,"I%1.2fFI%1.2fFI%1.2fF",p,p,p); 
+         printf(usb_cdc_putc,"%s",msg); 
+         delay_ms(1000);
+      }
+   }
+}
