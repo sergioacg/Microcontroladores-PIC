@@ -1,7 +1,0 @@
-Compiling C:\Users\Sergio\Google Drive\Projects\PIDTeclado\PIDTeclado on 04-May-20 at 21:42
->>> Warning 203 "PIDTeclado.c" Line 181(1,1): Condition always TRUE
->>> Warning 202 "PIDTeclado.c" Line 25(22,27): Variable never used:   theta
->>> Warning 202 "PIDTeclado.c" Line 28(5,9): Variable never used:   cont
-      Memory usage:   ROM=53%      RAM=33% - 38%
-      0 Errors,  3 Warnings.
-Build Successful.
