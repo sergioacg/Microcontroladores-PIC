@@ -1,0 +1,5 @@
+Compiling C:\Users\Sergio\Google Drive\Projects\Display 7 Seg\Display7Seg on 11-Jun-20 at 19:58
+>>> Warning 208 "Display7Seg.c" Line 12(1,5): Function not void and does not return a value  MAIN
+      Memory usage:   ROM=1%      RAM=2% - 2%
+      0 Errors,  1 Warnings.
+Build Successful.

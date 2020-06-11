@@ -1,0 +1,17 @@
+[PROJECT]
+Target=Display7Seg.hex
+Processor_Text=PIC16F887
+CCSVersion=5.076
+Compiler=PCM
+[Target Data]
+FileList=Display7Seg.c
+[Display7Seg.c]
+Type=4
+[mru-list]
+1=Display7Seg.c
+[Units]
+Count=1
+1=Display7Seg (main)
+
+[defines]
+buildcount=1

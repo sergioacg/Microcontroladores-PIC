@@ -1,0 +1,190 @@
+CCS PCM C Compiler, Version 5.076, 5967               11-Jun-20 19:58
+
+               Filename:   C:\Users\Sergio\Google Drive\Projects\Display 7 Seg\Display7Seg.lst
+
+               ROM used:   115 words (1%)
+                           Largest free fragment is 2048
+               RAM used:   8 (2%) at main() level
+                           9 (2%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   027
+0003:  NOP
+.................... #INCLUDE <16F887.H> 
+.................... //////////// Standard Header file for the PIC16F887 device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F887 
+0004:  BCF    0A.0
+0005:  BCF    0A.1
+0006:  BCF    0A.2
+0007:  ADDWF  02,F
+0008:  RETLW  3F
+0009:  RETLW  06
+000A:  RETLW  5B
+000B:  RETLW  4F
+000C:  RETLW  66
+000D:  RETLW  6D
+000E:  RETLW  7D
+000F:  RETLW  07
+0010:  RETLW  7F
+0011:  RETLW  67
+....................  
+.................... #list 
+....................  
+.................... #USE DELAY(CLOCK=4000000) 
+0012:  MOVLW  23
+0013:  MOVWF  04
+0014:  BCF    03.7
+0015:  MOVF   00,W
+0016:  BTFSC  03.2
+0017:  GOTO   026
+0018:  MOVLW  01
+0019:  MOVWF  78
+001A:  CLRF   77
+001B:  DECFSZ 77,F
+001C:  GOTO   01B
+001D:  DECFSZ 78,F
+001E:  GOTO   01A
+001F:  MOVLW  4A
+0020:  MOVWF  77
+0021:  DECFSZ 77,F
+0022:  GOTO   021
+0023:  GOTO   024
+0024:  DECFSZ 00,F
+0025:  GOTO   018
+0026:  RETURN
+.................... #FUSES XT,NOPROTECT,NOWDT,NOBROWNOUT,PUT,NOLVP 
+.................... BYTE CONST DISPLAY[10]= {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x67}; 
+.................... #BYTE PORTB=6 
+.................... #BYTE PORTC=7 
+.................... #DEFINE SW1 PORTC,0 
+.................... #DEFINE SW2 PORTC,1 
+.................... #DEFINE LED PORTC,2 
+.................... INT CONTADOR; 
+....................  
+.................... MAIN() 
+0027:  MOVF   03,W
+0028:  ANDLW  1F
+0029:  MOVWF  03
+002A:  MOVLW  FF
+002B:  MOVWF  21
+002C:  BSF    03.5
+002D:  BSF    03.6
+002E:  MOVF   09,W
+002F:  ANDLW  C0
+0030:  MOVWF  09
+0031:  BCF    03.6
+0032:  BCF    1F.4
+0033:  BCF    1F.5
+0034:  MOVLW  00
+0035:  BSF    03.6
+0036:  MOVWF  08
+0037:  BCF    03.5
+0038:  CLRF   07
+0039:  CLRF   08
+003A:  CLRF   09
+003B:  BCF    03.7
+.................... { 
+....................    SET_TRIS_B(0B00000000);             //Configura el puerto B 
+003C:  MOVLW  00
+003D:  BSF    03.5
+003E:  BCF    03.6
+003F:  MOVWF  06
+....................    SET_TRIS_C(0B00000011);             //Configura el puerto B 
+0040:  MOVLW  03
+0041:  MOVWF  07
+0042:  BCF    03.5
+0043:  MOVWF  21
+....................    CONTADOR = 0;                       // Inicializa contador en cero 
+0044:  CLRF   20
+....................    WHILE(TRUE)                         // Haga por siempre 
+....................    { 
+....................       PORTB= DISPLAY[CONTADOR]; 
+0045:  MOVF   20,W
+0046:  CALL   004
+0047:  MOVWF  78
+0048:  MOVWF  06
+....................       BIT_CLEAR(LED); 
+0049:  BCF    07.2
+....................       IF (BIT_TEST(SW1)) 
+004A:  BTFSS  07.0
+004B:  GOTO   05A
+....................       { 
+....................          DELAY_MS(200);                // Antirrebote 
+004C:  MOVLW  C8
+004D:  MOVWF  23
+004E:  CALL   012
+....................          while (BIT_TEST(SW1)); 
+004F:  BTFSC  07.0
+0050:  GOTO   04F
+....................          CONTADOR++; 
+0051:  INCF   20,F
+....................          PORTB= DISPLAY[CONTADOR]; 
+0052:  MOVF   20,W
+0053:  CALL   004
+0054:  MOVWF  78
+0055:  MOVWF  06
+....................          IF(CONTADOR==10) 
+0056:  MOVF   20,W
+0057:  SUBLW  0A
+0058:  BTFSC  03.2
+....................          { 
+....................             CONTADOR=0; 
+0059:  CLRF   20
+....................          } 
+....................       } 
+....................       IF (BIT_TEST(SW2)) 
+005A:  BTFSS  07.1
+005B:  GOTO   071
+....................       { 
+....................          DELAY_MS(200);             //Antirrebote 
+005C:  MOVLW  C8
+005D:  MOVWF  23
+005E:  CALL   012
+....................          BIT_SET(LED); 
+005F:  BSF    07.2
+....................          WHILE (CONTADOR>0) 
+0060:  MOVF   20,F
+0061:  BTFSC  03.2
+0062:  GOTO   070
+....................          { 
+....................             PORTB= DISPLAY[CONTADOR]; 
+0063:  MOVF   20,W
+0064:  CALL   004
+0065:  MOVWF  78
+0066:  MOVWF  06
+....................             DELAY_MS(1000); 
+0067:  MOVLW  04
+0068:  MOVWF  22
+0069:  MOVLW  FA
+006A:  MOVWF  23
+006B:  CALL   012
+006C:  DECFSZ 22,F
+006D:  GOTO   069
+....................             CONTADOR--; 
+006E:  DECF   20,F
+006F:  GOTO   060
+....................          } 
+....................          BIT_CLEAR(LED); 
+0070:  BCF    07.2
+....................       } 
+0071:  GOTO   045
+....................    } 
+.................... } 
+0072:  SLEEP
+
+Configuration Fuses:
+   Word  1: 2CE1   XT NOWDT PUT MCLR NOPROTECT NOCPD NOBROWNOUT IESO FCMEN NOLVP NODEBUG
+   Word  2: 3FFF   BORV40 NOWRT
