@@ -1,0 +1,235 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     LCD_ADDR
+005     lcd_total_rows
+006     lcd_total_columns
+007     new_row_request
+008     BACKLIGHT_LED
+009     lcd_gotoxy.data
+00A-00D offset
+00E-011 SCALE
+012     GAIN
+013-016 escala
+017-026 peso_conocido
+027-028 @sprintf_string
+029-02C MAIN.peso
+02D-030 MAIN.factor
+031     MAIN.unidad
+032     lcd_backlight_led.bl
+032     calibration.i
+032-035 set_scale.scale1
+032     init_hx.gain1
+032     lcd_init.addr
+032     get_units.times
+032-033 READ_FLOAT_EEPROM.n
+032     MAIN.@SCRATCH1
+033     calibration.cal
+033     set_gain.gain1
+033     lcd_init.col
+033     get_units.@SCRATCH1
+033     MAIN.@SCRATCH2
+034     lcd_init.row
+034-037 calibration.adc_lecture
+034     READ_FLOAT_EEPROM.i
+034     get_units.@SCRATCH2
+034     MAIN.@SCRATCH3
+035     lcd_init.i
+035-038 READ_FLOAT_EEPROM.data
+035     get_units.@SCRATCH3
+035     MAIN.@SCRATCH4
+036     lcd_init.@SCRATCH1
+036     get_units.@SCRATCH4
+038     tare.times
+038-039 WRITE_FLOAT_EEPROM.n
+038     get_value.times
+038     calibration.@SCRATCH1
+038     @PSTRINGC_705.@SCRATCH1
+039-03C tare.value
+039-03C get_value.value
+039     READ_FLOAT_EEPROM.@SCRATCH1
+039     calibration.@SCRATCH2
+039     @PSTRINGC_705.@SCRATCH2
+03A-03D WRITE_FLOAT_EEPROM.data
+03A     READ_FLOAT_EEPROM.@SCRATCH2
+03A     calibration.@SCRATCH3
+03B     READ_FLOAT_EEPROM.@SCRATCH3
+03B     calibration.@SCRATCH4
+03C-03F @PRINTF_L32D_705FPFPF.P1
+03C-03F @DIVFF.P2
+03C     @PSTRINGCN_705.P3
+03C     READ_FLOAT_EEPROM.@SCRATCH4
+03D-040 get_value.read
+03D-040 set_offset.offset1
+03D     READ_FLOAT_EEPROM.@SCRATCH5
+03D     @PSTRINGCN_705.@SCRATCH1
+03E     WRITE_FLOAT_EEPROM.i
+03E     @PSTRINGCN_705.@SCRATCH2
+03F     WRITE_FLOAT_EEPROM.@SCRATCH1
+040     @PRINTF_L32D_705FPFPF.P1
+040-043 @DIVFF.P2
+040     WRITE_FLOAT_EEPROM.@SCRATCH2
+041-044 @DTOF.P1
+041     get_average.times
+041     WRITE_FLOAT_EEPROM.@SCRATCH3
+041     @PRINTF_L32D_705FPFPF.@SCRATCH1
+042-045 get_average.sum
+042     WRITE_FLOAT_EEPROM.@SCRATCH4
+042     @PRINTF_L32D_705FPFPF.@SCRATCH2
+043     @PRINTF_L32D_705FPFPF.@SCRATCH3
+044     @DIVFF.@SCRATCH1
+044     @PRINTF_L32D_705FPFPF.@SCRATCH4
+045     @DIVFF.@SCRATCH2
+045     @PRINTF_L32D_705FPFPF.@SCRATCH5
+046     get_average.i
+046     @DIVFF.@SCRATCH3
+046     @PRINTF_L32D_705FPFPF.@SCRATCH6
+047     hx711_read.i
+047     @DIVFF.@SCRATCH4
+047     @PRINTF_L32D_705FPFPF.@SCRATCH7
+048-04B hx711_read.data
+048     @DIVFF.@SCRATCH5
+048     @PRINTF_L32D_705FPFPF.@SCRATCH8
+049     LCD_PUTC.in_data
+049-04C @FTOSD.P1
+049-04C @DIV3232.P2
+049-04C @MULFF.P3
+049     @DIVFF.@SCRATCH6
+04A     lcd_gotoxy.x
+04B     lcd_gotoxy.y
+04C     lcd_gotoxy.row
+04C     @delay_ms1.P1
+04C     hx711_read.@SCRATCH1
+04D     lcd_gotoxy.column
+04D-050 @DIV3232.P1
+04D-050 @MULFF.P2
+04D     @FTOSD.@SCRATCH1
+04E     lcd_gotoxy.row_addr
+04F     lcd_gotoxy.lcd_address
+050     lcd_gotoxy.@SCRATCH1
+051     lcd_send_byte.data
+051     @DIV3232.@SCRATCH1
+051     @MULFF.@SCRATCH1
+052     lcd_send_byte.type
+052     @DIV3232.@SCRATCH2
+052     @MULFF.@SCRATCH2
+053     lcd_send_byte.@SCRATCH1
+053     @DIV3232.@SCRATCH3
+053     @MULFF.@SCRATCH3
+054     i2c_send_nibble.data
+054     @DIV3232.@SCRATCH4
+055     i2c_send_nibble.type
+055     @DIV3232.@SCRATCH5
+056     i2c_send_nibble.@SCRATCH1
+057     @I2C_WRITEU_1.P1
+F80     porta
+F81     portb
+F82     portc
+F83     PSP_DATA
+F83     portd
+F84     porte
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+000004  LCD_INIT_STRING.call
+000014  LCD_INIT_STRING.data
+000018  @const766.call
+000028  @const771.call
+000030  @const772.call
+000040  @const773.call
+000056  @const781.call
+000064  @const782.call
+000072  @const789.call
+000082  @const790.call
+000090  @const791.call
+00009A  @const792.call
+0000A6  @const793.call
+0000BC  @const794.call
+0000D2  @const795.call
+0000E8  @delay_ms1
+00010E  @I2C_WRITEU_1
+00012A  i2c_send_nibble
+0001C6  lcd_send_byte
+0001FA  lcd_clear
+00020E  lcd_init
+00029A  lcd_backlight_led
+0002AA  hx711_read
+00032A  set_gain
+000354  init_hx
+000366  READ_FLOAT_EEPROM
+0003C4  lcd_gotoxy
+000426  LCD_PUTC
+000468  @PSTRINGC_705
+000488  @DIV3232
+000516  get_average
+00055C  set_offset
+000570  tare
+00059A  @MULFF
+00068C  @FTOSD
+0006CA  @PRINTF_L32D_705FPFPF
+000842  @PSTRINGCN_705
+000860  @DTOF
+000894  get_value
+00097A  @DIVFF
+000AD4  WRITE_FLOAT_EEPROM
+000B3A  calibration
+000CFC  set_scale
+000D10  get_units
+000D4C  @cinit1
+000D4C  MAIN
+000D96  @cinit2
+
+Project Directory:
+    D:\Google Drive\Projects\HX711\
+
+Project Files:
+    balanza.c                                               [15-Feb-22 18:37  CRC=45AF2194]
+    C:\Program Files (x86)\PICC\Devices\18f4550.h           [15-Jan-18 13:57  CRC=06200171]
+    i2c_Flex_LCD.c                                          [26-Apr-20 13:01  CRC=16AFB211]
+    hx711.c                                                 [15-Feb-22 14:44  CRC=B821D69E]
+
+Source signature=D2C28252
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=A717
+
+Units:
+    balanza (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   balanza.xsym
+    Errors:      balanza.err
+    Ext Symbols: balanza.esym
+    INHX32:      balanza.hex
+    Symbols:     balanza.sym
+    List:        balanza.lst
+    Debug/COFF:  balanza.cof
+    Project:     balanza.ccspjt
+    Call Tree:   balanza.tre
+    Statistics:  balanza.STA

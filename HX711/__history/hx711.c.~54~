@@ -1,0 +1,137 @@
+/************************************************************************************** 
+*   hx711.c - communicates with a HX711                                               * 
+*                                                                                     *
+*   by Sergio Andres Castaño Giraldo                                                  *
+*   website: https://controlautomaticoeducacion.com/                                  *
+*   YouTube Chanel: https://www.youtube.com/channel/UCdzSnI03LpBI_8gXJseIDuw          *
+*                                                                                     *
+*   This program is free software; you can redistribute it and/or                     * 
+*   modify it under the terms of the GNU General Public License                       * 
+*   as published by the Free Software Foundation version 2                            * 
+*   of the License.                                                                   * 
+*                                                                                     * 
+*   This program is distributed in the hope that it will be useful,                   * 
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of                    * 
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                     * 
+*   GNU General Public License for more details.                                      * 
+*                                                                                     * 
+*   You should have received a copy of the GNU General Public License                 * 
+*   along with this program; if not, write to the Free Software                       * 
+*   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.   * 
+**************************************************************************************/ 
+
+#byte porta = 0xf80 // Identificador para el puerto A. 
+#byte portb = 0xf81 // Identificador para el puerto B. 
+#byte portc = 0xf82 // Identificador para el puerto C. 
+#byte portd = 0xf83 // Identificador para el puerto D. 
+#byte porte = 0xf84 // Identificador para el puerto E.
+
+#ifndef DOUT 
+   #define DOUT       PIN_B2            //input - data  
+#endif 
+
+#ifndef SCK 
+   #define SCK       PIN_B3            // output clock
+#endif 
+
+int32 OFFSET=0;      // used for tare weight
+float SCALE = 1;     // used to return weight in grams, kg, ounces, whatever
+int GAIN = 1;
+
+void set_scale(float scale1){
+     SCALE = scale1;
+}
+
+void set_offset(int32 offset1) {
+     OFFSET = offset1;
+}
+
+int32 hx711_read()              
+{ 
+   int8 i; 
+   int32 data=0; 
+
+   output_low(SCK);  
+   delay_ms(100);
+   while(input(DOUT) == 1);
+   for (i=0;i<24;i++){ 
+      output_high(SCK); 
+      delay_us(1); 
+      output_low(SCK); 
+      delay_us(1);
+      shift_left(&data,3,input(DOUT));   
+   } 
+   
+   for (i=0;i<GAIN;i++){ 
+        output_high(SCK);
+        delay_us(1);
+        output_low(SCK);
+        delay_us(1);
+   }
+   //data = data ^ 0x800000;
+   if(data & 0x800000 !=0){
+     data = data | 0xff000000;
+     return(-data);
+   }
+   else return(data); 
+} 
+
+void set_gain(int gain) {
+     switch (gain) {
+          case 128:          // channel A, gain factor 128
+               GAIN = 1;
+               break;
+          case 64:          // channel A, gain factor 64
+               GAIN = 3;
+               break;
+          case 32:          // channel B, gain factor 32
+               GAIN = 2;
+               break;
+     }
+
+     output_low(SCK);
+     hx711_read();
+}
+
+
+void init_hx(int gain) 
+{ 
+   output_low(SCK);    //Output
+   output_high(DOUT);  //Input
+   set_gain(gain);
+} 
+
+int32 get_average(int times)              
+{
+     int32 means = 0,value;
+     for (int i=0;i<times;i++){
+          value = hx711_read();
+          means = means + value;
+          delay_ms(1);
+     }
+     return(means / times);
+}
+
+int32 get_value(int times)              
+{
+     return get_average(times) - OFFSET;
+}
+
+float get_units(int times) {
+     return get_value(times) / SCALE;
+}
+
+void tare(int times){
+     int32 value = get_average(times);
+     set_offset(value);
+}
+
+void power_down() {
+     output_low(SCK);
+     output_high(SCK);
+}
+
+void power_up() {
+     output_low(SCK);
+}
+

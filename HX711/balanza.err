@@ -1,0 +1,7 @@
+Compiling D:\Google Drive\Projects\HX711\balanza on 15-Feb-22 at 18:37
+>>> Warning 208 "balanza.c" Line 22(1,19): Function not void and does not return a value  WRITE_FLOAT_EEPROM
+>>> Warning 203 "balanza.c" Line 129(1,1): Condition always TRUE
+>>> Warning 202 "D:\Google Drive\Projects\HX711\i2c_Flex_LCD.c" Line 174(13,17): Variable never used:   data
+      Memory usage:   ROM=13%      RAM=3% - 4%
+      0 Errors,  3 Warnings.
+Build Successful.

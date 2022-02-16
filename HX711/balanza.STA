@@ -1,0 +1,89 @@
+
+ROM used:   4300/32768 (13%)
+            4300/32768 (13%) including unused fragments
+
+            3.2 Average locations per line
+            20.6 Average locations per statement
+
+RAM used:   54/2048 (3%) at main() level
+            88/2048 (4%) worst case
+
+Stack used: 6 worst case (6 in main + 0 for interrupts)
+Stack size: 31
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  165    84  40  balanza.c
+  852     0   0  C:\Program Files (x86)\PICC\Devices\18f4550.h
+  211    77  37  i2c_Flex_LCD.c
+  127    48  23  hx711.c
+----- -----
+ 1355   209 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     38   0    1             @delay_ms1
+0     28   0    1             @I2C_WRITEU_1
+0     16   0    1     63  2.3  lcd_backlight_led
+0    156   2    3    574  5.9  i2c_send_nibble
+0     52   1    3    149  2.8  lcd_send_byte
+0     20   0    0     61  1.9  lcd_clear
+0     20   0    0             @const695
+0    140   2    5    902  5.8  lcd_init
+0     98   1    7    681  8.0  lcd_gotoxy
+0     66   1    1    310  5.9  LCD_PUTC
+0     20   0    4     25  1.6  set_scale
+0     20   0    4     25  1.6  set_offset
+0    128   1    6    634  6.2  hx711_read
+0     42   0    1    195  3.5  set_gain
+0     18   0    1     59  1.2  init_hx
+0     70   1    6    178  4.7  get_average
+0    142   2   13    178  4.7  @DIV3232
+0    230   3    9    232  4.6  get_value
+0     52   1    4    232  4.6  @DTOF
+0    242   3   11             @MULFF
+0     60   1    5     38  2.1  get_units
+0    346   4   14     38  2.1  @DIVFF
+0     42   0    5     56  1.8  tare
+0    102   1   11    189  5.5  WRITE_FLOAT_EEPROM
+0     94   1   12    211  5.5  READ_FLOAT_EEPROM
+0    450   5   10   1201  6.8  calibration
+0     16   0    0   1201  6.8  @const766
+0     32   0    2             @PSTRINGC_705
+0      8   0    0             @const771
+0     16   0    0             @const772
+0     22   0    0             @const773
+0     62   1    5             @FTOSD
+0    376   4   13             @PRINTF_L32D_705FPFPF
+0     30   0    3             @PSTRINGCN_705
+0     14   0    0             @const781
+0     14   0    0   1405  6.4  @const782
+0    896  10   13   1895  8.2  MAIN
+0     16   0    0   1895  8.2  @const789
+0     14   0    0             @const790
+0     10   0    0             @const791
+0     12   0    0             @const792
+0     22   0    0             @const793
+0     22   0    0             @const794
+0     22   0    0             @const795
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               26
+    Statements              209
+    Comments                303
+    Volume (V)              20986
+    Difficulty (D)          118.9
+    Effort to implement (E) 2494538
+    Time to implement (T)   38 hours, 30 minutes
+    Est Delivered Bugs (B)  6
+    Cyclomatic Complexity   47
+    Maintainability (MI)    60
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-07FFE  4296  28468  
+
+
+

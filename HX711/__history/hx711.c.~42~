@@ -1,0 +1,92 @@
+/************************************************************************************** 
+*   hx711.c - communicates with a HX711                                               * 
+*                                                                                     *
+*   by Sergio Andres Castaño Giraldo                                                  *
+*   website: https://controlautomaticoeducacion.com/                                  *
+*   YouTube Chanel: https://www.youtube.com/channel/UCdzSnI03LpBI_8gXJseIDuw          *
+*                                                                                     *
+*   This program is free software; you can redistribute it and/or                     * 
+*   modify it under the terms of the GNU General Public License                       * 
+*   as published by the Free Software Foundation version 2                            * 
+*   of the License.                                                                   * 
+*                                                                                     * 
+*   This program is distributed in the hope that it will be useful,                   * 
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of                    * 
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                     * 
+*   GNU General Public License for more details.                                      * 
+*                                                                                     * 
+*   You should have received a copy of the GNU General Public License                 * 
+*   along with this program; if not, write to the Free Software                       * 
+*   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.   * 
+**************************************************************************************/ 
+
+#byte porta = 0xf80 // Identificador para el puerto A. 
+#byte portb = 0xf81 // Identificador para el puerto B. 
+#byte portc = 0xf82 // Identificador para el puerto C. 
+#byte portd = 0xf83 // Identificador para el puerto D. 
+#byte porte = 0xf84 // Identificador para el puerto E.
+
+#ifndef DOUT 
+   #define DOUT       PIN_B2            //input - data  
+#endif 
+
+#ifndef SDK 
+   #define SDK       PIN_B3            // output clock
+#endif 
+
+int32 tare_value=0;
+
+void init_hx() 
+{ 
+   output_low(SDK);    //Output
+   output_high(DOUT);  //Input
+   
+} 
+
+int32 get_value()              
+{ 
+   int8 i; 
+   int32 data=0; 
+
+   output_low(SDK);  
+   delay_ms(100);
+   while(input(DOUT) == 1);
+   for (i=0;i<24;i++){ 
+           
+      output_high(SDK); 
+      delay_us(1); 
+      output_low(SDK); 
+      delay_us(1);
+      shift_left(&data,3,input(DOUT)); 
+      
+   } 
+   output_high(SDK);
+   delay_us(1);
+   output_low(SDK);
+   delay_us(1);
+   data = data ^ 0x800000;
+     
+   data = data - tare_value;
+   return(data); 
+} 
+
+
+int32 get_average(int times)              
+{
+     int32 means = 0,value;
+     for (int i=0;i<times;i++){
+          value = get_value();
+          means = means + value;
+          delay_ms(1);
+     }
+     return(means / times);
+}
+
+void tare(int times){
+     tare_value = get_average(times);
+}
+
+void set_scale(unsigned long scale){
+
+}
+

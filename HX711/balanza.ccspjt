@@ -1,0 +1,128 @@
+[PROJECT]
+Target=balanza.hex
+Processor_Text=PIC18F4550
+CCSVersion=5.076
+Compiler=PCH
+[Target Data]
+FileList=balanza.c
+[balanza.c]
+Type=4
+[mru-list]
+1=balanza.c
+
+[defines]
+buildcount=155
+
+[ProjectLog]
+Days=3
+D1=13-02-2022
+D1_L=2
+D1_L1=[77916]Stopped Editing.
+TotalEdit=253
+TotalDebug=0
+D1_E=12
+D1_D=0
+D1_L2=[80532]Project Closed.
+D2=14-02-2022
+D2_L=32
+D2_L1=[59637]Project Opened.
+D2_L2=[59809]Started Editing.
+D2_L3=[60205]Stopped Editing.
+D2_L4=[60247]Started Editing.
+D2_L5=[60562]Stopped Editing.
+D2_L6=[60589]Started Editing.
+D2_L7=[61733]Stopped Editing.
+D2_L8=[61905]Started Editing.
+D2_L9=[63952]Stopped Editing.
+D2_L10=[63995]Started Editing.
+D2_L11=[65396]Stopped Editing.
+D2_L12=[65465]Started Editing.
+D2_L13=[65803]Stopped Editing.
+D2_L14=[65813]Started Editing.
+D2_L15=[67677]Stopped Editing.
+D2_L16=[68249]Started Editing.
+D2_L17=[70261]Stopped Editing.
+D2_L18=[70364]Started Editing.
+D2_L19=[70977]Stopped Editing.
+D2_L20=[78912]Started Editing.
+D2_L21=[79216]Stopped Editing.
+D2_L22=[79251]Started Editing.
+D2_L23=[79553]Stopped Editing.
+D2_L24=[80679]Started Editing.
+D2_L25=[80956]Stopped Editing.
+D2_E=129
+D2_D=0
+D2_L26=[80956]Project Closed.
+D2_L27=[80972]Project Opened.
+D2_L28=[81000]Started Editing.
+D2_L29=[84831]Stopped Editing.
+D2_L30=[85186]Started Editing.
+D2_L31=[85486]Stopped Editing.
+D2_L32=[85811]Started Editing.
+D3=15-02-2022
+D3_L=42
+D3_L1=[2295]Stopped Editing.
+D3_L2=[2316]Started Editing.
+D3_L3=[2880]Stopped Editing.
+D3_L4=[3138]Started Editing.
+D3_L5=[3515]Stopped Editing.
+D3_L6=[3773]Started Editing.
+D3_L7=[3992]Stopped Editing.
+D3_E=112
+D3_D=0
+D3_L8=[3992]Project Closed.
+D3_L9=[31909]Project Opened.
+D3_L10=[31925]Started Editing.
+D3_L11=[33675]Stopped Editing.
+D3_L12=[33730]Started Editing.
+D3_L13=[36521]Stopped Editing.
+D3_L14=[37886]Started Editing.
+D3_L15=[38620]Stopped Editing.
+D3_L16=[38971]Started Editing.
+D3_L17=[40074]Stopped Editing.
+D3_L18=[40222]Started Editing.
+D3_L19=[41400]Stopped Editing.
+D3_L20=[41530]Started Editing.
+D3_L21=[41898]Stopped Editing.
+D3_L22=[43075]Started Editing.
+D3_L23=[43575]Stopped Editing.
+D3_L24=[44283]Started Editing.
+D3_L25=[44590]Stopped Editing.
+D3_L26=[45448]Started Editing.
+D3_L27=[45748]Stopped Editing.
+D3_L28=[45847]Started Editing.
+D3_L29=[46479]Stopped Editing.
+D3_L30=[46874]Started Editing.
+D3_L31=[47258]Stopped Editing.
+D3_L32=[47278]Started Editing.
+D3_L33=[47605]Stopped Editing.
+D3_L34=[49629]Started Editing.
+D3_L35=[49929]Stopped Editing.
+D3_L36=[50974]Project Opened.
+D3_L37=[50988]Started Editing.
+D3_L38=[52035]Stopped Editing.
+D3_L39=[52095]Started Editing.
+D3_L40=[53578]Stopped Editing.
+D3_L41=[66988]Started Editing.
+D3_L42=[67325]Stopped Editing.
+
+[fileformats]
+forcecoff=0
+
+[Opened Files]
+1=balanza.c
+t1=149
+2=..\MAX6675_SPI con PIC\TermocuplaK_18F4550.c
+t2=1
+3=..\MAX6675_SPI con PIC\max6675.c
+t3=37
+4=..\MAX6675_SPI con PIC\MAX6675.h
+t4=1
+5=hx711.c
+t5=1
+6=..\LCD_I2C con PIC\CAE\LCD_via_I2C.c
+t6=1
+Count=6
+[Units]
+Count=1
+1=balanza (main)

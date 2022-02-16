@@ -1,0 +1,141 @@
+#INCLUDE <18f4550.h>
+#USE DELAY(CLOCK=20000000,crystal)
+#FUSES HS,NOPROTECT,NOWDT,NOBROWNOUT,NOPUT,NOLVP
+#use rs232(baud=9600, xmit=pin_c6, rcv=pin_c7, bits=8)
+
+#use i2c(Master,Fast=100000, sda=PIN_B0, scl=PIN_B1,force_sw)  
+#include "i2c_Flex_LCD.c"  
+#include "hx711.c"  
+#define MODO       PIN_B4
+#define TARA       PIN_B5
+float escala= 0;//550.0 / 243500.0;
+float peso_conocido[4] = {550,1000,3000,5000};
+
+//Funcion de calibracion y ajuste
+void calibration(){
+  
+  int i = 0,cal=1;
+  int32 adc_lecture;
+  
+  // Escribimos el Mensaje en el LCD
+  lcd_gotoxy(2, 1);        
+  printf(lcd_putc, "Calibracion de");
+  lcd_gotoxy(4, 2);        
+  printf(lcd_putc, "Balanza");
+  delay_ms(1500);
+  tare(10);  //El peso actual es considerado Tara.
+  
+  lcd_clear();
+
+  //Inicia el proceso de ajuste y calibración
+  while(cal == 1){
+    
+    lcd_gotoxy(1, 1);        
+    printf(lcd_putc, "Peso Conocido:");
+    lcd_gotoxy(1, 2);
+    printf(lcd_putc, "%4.0f g             ",peso_conocido[i]);
+    
+    //Busca el peso conocido con el boton tara
+    if(input(TARA) == 1){  
+      delay_ms(200); // Anti-debounde
+      i =(i>2) ? 0:i+1; //if-else en una linea
+    }
+
+    //Selecciona el peso conocido con el boton modo
+    if(input(MODO)){
+      delay_ms(200);
+      lcd_clear();
+      lcd_gotoxy(1, 1);        
+      printf(lcd_putc, "Ponga el Peso");
+      lcd_gotoxy(1, 2);        
+      printf(lcd_putc, "y espere ...");
+      
+      delay_ms(3000);
+
+      //Lee el valor del HX711
+      //adc_lecture = get_average(10);
+      adc_lecture = get_value(10);
+
+      //Calcula la escala con el valor leido dividido el peso conocido
+      //escala = peso_conocido[i] / adc_lecture;
+      escala = adc_lecture / peso_conocido[i];
+
+      //Guarda la escala en la EEPROM
+      //EEPROM.put( 0, escala );
+      delay_ms(100);
+      cal = 0; //Cambia la bandera para salir del while
+      lcd_clear();
+    }
+    
+  }
+}
+
+union dato {        // Defino la union, y sus componentes
+        double   f;
+        int32 g;
+};
+ 
+union dato tempc;
+
+void main() {  
+     unsigned long int val1 = -10;
+     int32 val2;
+     float val3;
+     float peso=0;
+     lcd_init(0x4E,16,2);
+     lcd_backlight_led(ON); //Enciende la luz de Fondo
+     init_hx(128);
+     lcd_clear();
+     
+     if( input(MODO) == 1 && input(TARA) == 1)
+          calibration();
+          
+     lcd_gotoxy(1, 1);        
+     printf(lcd_putc, "Retire el Peso");
+     lcd_gotoxy(1, 2);        
+     printf(lcd_putc, "y espere ...");
+     set_scale(escala);
+     tare(10);
+     //delay_ms(2000);
+     lcd_clear();
+     
+     
+     lcd_gotoxy(1, 1);        
+     printf(lcd_putc, "offs:%ld",OFFSET);
+     lcd_gotoxy(1, 2);        
+     printf(lcd_putc, "sca:%f",SCALE);
+     //delay_ms(5000);
+     lcd_clear();
+     
+     
+     lcd_gotoxy(1, 1);        
+     printf(lcd_putc, "Listo....");
+     //delay_ms(3000);
+     lcd_clear();
+     tare(10);
+     while(1){
+          /*
+          peso = get_units(10);
+          lcd_gotoxy(3, 1);        
+          printf(lcd_putc, "Balanza CAE"); 
+          lcd_gotoxy(1, 2);        
+          printf(lcd_putc, "Peso: %4.2f g      ",peso); 
+          if(input(TARA)==1){
+               delay_ms(200);
+               tare(10);
+          }
+          delay_ms(100);
+          */
+          
+          val2 = val1+2;
+          
+          
+          val3 = val2;
+          
+          lcd_gotoxy(1, 1);        
+          printf(lcd_putc, "val1: %lu",val1);
+          lcd_gotoxy(1, 2);        
+          printf(lcd_putc, "val3: %f",val3);
+     }
+
+}
